@@ -18,6 +18,12 @@ public class Philo {
     public void putDownFork() {
         this.eating = false;
     }
+    public int getLeftFork() {
+        return num;
+    }
+    public int getRightFork() {
+        return (num + 1) % 5;
+    }
 
     public int[] forksInUse() {
         if (eating) {
