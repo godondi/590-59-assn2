@@ -1,6 +1,3 @@
-Here’s a **simple, natural README.md** you can paste. Short, straightforward, and student-style:
-
----
 
 # Dining Philosophers – Java Threads
 
