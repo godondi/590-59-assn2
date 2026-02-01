@@ -1,6 +1,4 @@
-import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.Queue;
 
 public class Fork {
     public String name;
@@ -13,7 +11,7 @@ public class Fork {
     public Fork(String name) {
         occupied = ForkStatus.AVAILABLE;
         this.name = name;
-        this.philosophersQueue = new LinkedList<Philosopher>();
+        this.philosophersQueue = new LinkedList<>();
     }
 
     public ForkPickUpAttemptResult pickUp(Philosopher philosopher) {
@@ -46,7 +44,6 @@ public class Fork {
                 while (occupied == ForkStatus.NOTIFYING_PHILOSOPHER && !philosophersQueue.isEmpty()) {
                     Philosopher philosopherToInform = philosophersQueue.pop();
 
-                    // Check if philosopher is dead and continue
                     if (philosopherToInform.getStatus() != PhilosopherStatus.STARVED) {
                         // Wake philosopher
                         philosopherToInform.interrupt();

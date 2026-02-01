@@ -1,5 +1,6 @@
 public class Philosopher extends Thread {
     private PhilosopherStatus status;
+    private int waited;         // Number of milliseconds waited
     public final String name;
 
     private final Fork rightFork;
@@ -10,6 +11,7 @@ public class Philosopher extends Thread {
         this.name = name;
         this.rightFork = rightFork;
         this.leftFork = leftFork;
+        this.waited = 0;
     }
 
     @Override
@@ -31,7 +33,7 @@ public class Philosopher extends Thread {
             Thread.sleep(thinkingTime);
         }
         catch (Exception e) {
-            System.out.println("Error: " + e);
+            System.out.println("Error: " + name + " interrupted from thinking!!");
         }
 
         System.out.println(name + " is trying to eat.");
@@ -60,28 +62,43 @@ public class Philosopher extends Thread {
 
             putDownForks();
 
-            // Back to thinking
+            // Reset waited time and back to thinking
+            waited = 0;
             System.out.println(name + " finished eating.");
             think();
         }
         else {
             if (leftForkPickUpAttemptResult == ForkPickUpAttemptResult.SUCCEED) {
                 leftFork.putDown(this);
-                System.out.println(name + " put down " + leftFork.name);
+                System.out.println(name + " put down " + leftFork.name + ".");
             }
             if (rightForkPickUpAttemptResult == ForkPickUpAttemptResult.SUCCEED) {
                 rightFork.putDown(this);
-                System.out.println(name + " put down " + rightFork.name);
+                System.out.println(name + " put down " + rightFork.name + ".");
             }
 
+            status = PhilosopherStatus.WAITING_TO_EAT;
             System.out.println(name + " is waiting to eat.");
+
+            // Record start time
+            long startTime = System.nanoTime();
             try {
                 // Waits for 10 seconds before dying
-                Thread.sleep(10000);
+                Thread.sleep((int) (10000-waited));
                 System.out.println(name + " died from starvation.");
                 status = PhilosopherStatus.STARVED;
             }
             catch (InterruptedException e) {
+                // Record how long we've already waited to eat
+                long endTime = System.nanoTime();
+                long duration = endTime - startTime;
+                waited += (int) (duration / 1000000);
+
+                System.out.println(name + " was told to try to eat again (waited " +
+                        (int) (duration / 1000000) + " milliseconds, " +
+                        waited + " milliseconds total).");
+
+                // Attempt again to eat
                 eat();
             }
         }
@@ -92,10 +109,10 @@ public class Philosopher extends Thread {
         ForkPickUpAttemptResult rightStatus = rightFork.pickUp(this);
 
         if (rightStatus == ForkPickUpAttemptResult.SUCCEED) {
-            System.out.println(name + " picked up " + rightFork.name);
+            System.out.println(name + " picked up " + rightFork.name + ".");
         }
         else {
-            System.out.println(name + " couldn't pick up " + rightFork.name);
+            System.out.println(name + " couldn't pick up " + rightFork.name + ".");
         }
 
         return rightStatus;
@@ -105,10 +122,10 @@ public class Philosopher extends Thread {
         ForkPickUpAttemptResult leftStatus = leftFork.pickUp(this);
 
         if (leftStatus == ForkPickUpAttemptResult.SUCCEED) {
-            System.out.println(name + " picked up " + leftFork.name);
+            System.out.println(name + " picked up " + leftFork.name + ".");
         }
         else {
-            System.out.println(name + " couldn't pick up " + leftFork.name);
+            System.out.println(name + " couldn't pick up " + leftFork.name + ".");
         }
 
         return leftStatus;
