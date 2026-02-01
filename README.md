@@ -5,6 +5,8 @@
 
 * Jimena Luna
 * Grace Odondi
+* Destiny Okonkwo
+ ·
 
 ## How to Run
 
