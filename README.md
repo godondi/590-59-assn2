@@ -40,7 +40,7 @@ Five forks and five philosophers are initalized at the beginning of the program.
 
 ## Starvation
 
-The queues contained in the fork ensure that a each philosopher that has tried to eat and is now in waiting state is able to eat in a reasonable amount of time before they starve. This prevents starvation and ensures every philosopher eats. 
+The queues contained in the fork ensure that a each philosopher that has tried to eat and is now in waiting state is able to eat in a reasonable amount of time before they starve. This makes starvation improbable, although not impossible.
 
 ## Race Conditions
 
