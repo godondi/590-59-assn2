@@ -26,7 +26,7 @@ java -cp out dining.DiningPhilosophers
 
 Each philosopher is implemented as a thread. Philosophers alternate between thinking and eating. Forks are shared objects placed between philosophers. Forks have state that keeps track of if a philospher can pick it up. 
 
-Philosophers think and eat for a random amount of time. When a philospher goes to eat, they attempt to pick up each fork--if unsuccessful, they place either fork down, join the waiting queue for that fork, and go into a waiting state. When that fork becomes available, the thread is awaken and that philosopher can attempt again to eat. 
+Philosophers think and eat (represented by the thread sleeping) for a random amount of time. When a philospher goes to eat, they attempt to pick up each fork--if unsuccessful, they place either fork down, join the waiting queue for that fork, and go into a waiting state. When that fork becomes available, the thread is awaken and that philosopher can attempt again to eat. 
 
 ## Representation
 
