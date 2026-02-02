@@ -48,6 +48,10 @@ public class Philosopher extends Thread {
             System.out.println(name + " is eating.");
             status = PhilosopherStatus.EATING;
 
+            // Remove philosophers from fork queues
+            leftFork.removePhilosopherFromQueues(this);
+            rightFork.removePhilosopherFromQueues(this);
+
             // Get random length of time for how long the philosopher will eat
             int max = 2000;     // Two seconds
             int min = 5000;     // Five seconds

@@ -59,4 +59,8 @@ public class Fork {
             }
         }
     }
+
+    public void removePhilosopherFromQueues(Philosopher philo) {
+        philosophersQueue.remove(philo);
+    }
 }
