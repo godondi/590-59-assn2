@@ -83,8 +83,8 @@ public class Philosopher extends Thread {
             // Record start time
             long startTime = System.nanoTime();
             try {
-                // Waits for 10 seconds before dying
-                Thread.sleep((int) (10000-waited));
+                // Waits for 15 seconds before dying
+                Thread.sleep((int) (15000-waited));
                 System.out.println(name + " died from starvation.");
                 status = PhilosopherStatus.STARVED;
             }
